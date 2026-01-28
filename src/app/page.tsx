@@ -2,7 +2,20 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Home() {
+import { youtubeVideos } from "@/content/youtubeVideos";
+import { fetchRecentYouTubeVideos, getYouTubeRssUrl } from "@/lib/youtubeRss";
+
+function fallbackThumbnailUrl(id: string) {
+  return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+}
+
+export default async function Home() {
+  const rssUrl = getYouTubeRssUrl();
+  const recent = await fetchRecentYouTubeVideos(6);
+  const hasRecent = recent.length > 0;
+  const hasManual = youtubeVideos.length > 0;
+  const showManual = !hasRecent && hasManual;
+
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans selection:bg-gray-200">
       <main className="max-w-5xl mx-auto px-6 py-16 lg:py-24">
@@ -29,14 +42,6 @@ export default function Home() {
             </div>
 
             <div className="flex flex-wrap gap-3">
-              <a
-                href="/resume.pdf"
-                className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Download Resume
-              </a>
               <a
                 href="https://www.youtube.com/@krishnakategaruai"
                 className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
@@ -446,6 +451,82 @@ export default function Home() {
               </a>
             ))}
           </div>
+
+          <div className="mt-10">
+            <div className="flex items-end justify-between gap-4 mb-5">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900">Recent videos</h3>
+                <p className="text-sm text-gray-600 mt-1">
+                  Click any card to open on YouTube.
+                </p>
+              </div>
+              <a
+                href="https://www.youtube.com/@krishnakategaruai"
+                className="text-sm text-gray-700 underline underline-offset-4 hover:text-black"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View all on YouTube
+              </a>
+            </div>
+
+            {!hasRecent && !hasManual ? (
+              <div className="rounded-lg border border-gray-200 bg-white p-6">
+                <p className="text-gray-700">
+                  Videos will appear here automatically once the YouTube feed is configured
+                  (set <span className="font-medium">YOUTUBE_CHANNEL_ID</span> or <span className="font-medium">YOUTUBE_RSS_URL</span>).
+                </p>
+                <p className="text-sm text-gray-600 mt-2">
+                  Current feed: {rssUrl ? "Configured" : "Not configured"}
+                </p>
+              </div>
+            ) : (
+              <div className="grid sm:grid-cols-2 gap-4">
+                {(hasRecent ? recent : youtubeVideos).slice(0, 6).map((v: any) => {
+                  const url = hasRecent ? v.url : `https://www.youtube.com/watch?v=${v.id}`;
+                  const title = v.title;
+                  const thumb = hasRecent
+                    ? v.thumbnailUrl || (v.id ? fallbackThumbnailUrl(v.id) : undefined)
+                    : fallbackThumbnailUrl(v.id);
+
+                  return (
+                    <a
+                      key={url}
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group rounded-lg border border-gray-200 bg-white overflow-hidden hover:border-gray-300 transition-colors"
+                    >
+                      <div className="aspect-video bg-gray-50 overflow-hidden">
+                        <img
+                          src={thumb}
+                          alt={title}
+                          className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className="p-4">
+                        <p className="font-semibold text-gray-900 leading-snug line-clamp-2">
+                          {title}
+                        </p>
+                        <p className="mt-2 text-sm text-gray-700">Open on YouTube →</p>
+                      </div>
+                    </a>
+                  );
+                })}
+
+                {showManual ? (
+                  <div className="sm:col-span-2 rounded-lg border border-gray-200 bg-gray-50 p-5">
+                    <p className="text-sm text-gray-700">
+                      Auto-feed isn’t configured yet, so this is a curated list. Set
+                      <span className="font-medium"> YOUTUBE_CHANNEL_ID</span> (preferred) or
+                      <span className="font-medium"> YOUTUBE_RSS_URL</span> for automatic “latest uploads”.
+                    </p>
+                  </div>
+                ) : null}
+              </div>
+            )}
+          </div>
         </section>
 
         {/* FAQ */}
@@ -508,14 +589,6 @@ export default function Home() {
                 rel="noopener noreferrer"
               >
                 YouTube
-              </a>
-              <a
-                href="/resume.pdf"
-                className="text-gray-600 hover:text-black transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Resume
               </a>
             </div>
           </div>
