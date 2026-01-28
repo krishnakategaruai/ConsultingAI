@@ -5,6 +5,98 @@ import Link from "next/link";
 import { youtubeVideos } from "@/content/youtubeVideos";
 import { fetchRecentYouTubeVideos, getYouTubeRssUrl } from "@/lib/youtubeRss";
 
+const CONTACT = {
+  email: "krishnakategaruai@gmail.com",
+  linkedin: "https://www.linkedin.com/in/krishna-kategaru-32463253",
+  // WhatsApp uses E.164 format without '+' in the URL (this will be visible in the link target).
+  whatsappE164NoPlus: "916305816104",
+} as const;
+
+function buildWhatsAppLink(message: string) {
+  const encoded = encodeURIComponent(message);
+  return `https://wa.me/${CONTACT.whatsappE164NoPlus}?text=${encoded}`;
+}
+
+function IconLink({
+  href,
+  label,
+  children,
+}: {
+  href: string;
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <a
+      href={href}
+      className="inline-flex items-center justify-center w-10 h-10 rounded-md border border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50 transition-colors"
+      target={href.startsWith("http") ? "_blank" : undefined}
+      rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+      aria-label={label}
+      title={label}
+    >
+      {children}
+    </a>
+  );
+}
+
+function MailIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="text-gray-700"
+      {...props}
+    >
+      <path d="M4 6h16v12H4z" />
+      <path d="m4 7 8 6 8-6" />
+    </svg>
+  );
+}
+
+function LinkedInIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="text-gray-700"
+      {...props}
+    >
+      <path d="M4 4h16v16H4z" />
+      <path d="M8 10v7" />
+      <path d="M8 7.5v.5" />
+      <path d="M12 17v-4.2c0-1.3.7-2.1 1.9-2.1 1.2 0 1.9.8 1.9 2.1V17" />
+      <path d="M12 10v7" />
+    </svg>
+  );
+}
+
+function WhatsAppIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="text-gray-700"
+      {...props}
+    >
+      <path d="M21 11.5a8.5 8.5 0 0 1-12.7 7.4L3 20l1.3-4.7A8.5 8.5 0 1 1 21 11.5z" />
+      <path d="M9.2 9.2c.6-1 1.2-1.1 1.8-.8l.9.5c.5.3.6.7.4 1.2l-.4 1c.6 1.1 1.5 2 2.6 2.6l1-.4c.5-.2.9-.1 1.2.4l.5.9c.3.6.2 1.2-.8 1.8-1 .6-3.5.2-5.6-1.9-2.1-2.1-2.5-4.6-1.9-5.6z" />
+    </svg>
+  );
+}
+
 function fallbackThumbnailUrl(id: string) {
   return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 }
@@ -41,23 +133,24 @@ export default async function Home() {
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-3">
-              <a
-                href="https://www.youtube.com/@krishnakategaruai"
-                className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
+            <div className="flex items-center gap-3">
+              <IconLink
+                href={`mailto:${CONTACT.email}`}
+                label="Email (Gmail)"
               >
-                YouTube
-              </a>
-              <a
-                href="https://www.linkedin.com/in/krishna-kategaru-32463253"
-                className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
+                <MailIcon width={20} height={20} />
+              </IconLink>
+              <IconLink href={CONTACT.linkedin} label="LinkedIn">
+                <LinkedInIcon width={20} height={20} />
+              </IconLink>
+              <IconLink
+                href={buildWhatsAppLink(
+                  "Hi Krishna, I’m reaching out from kkai.in. I’d like to discuss AI architecture/system design."
+                )}
+                label="WhatsApp"
               >
-                LinkedIn
-              </a>
+                <WhatsAppIcon width={20} height={20} />
+              </IconLink>
             </div>
           </div>
 
@@ -568,28 +661,26 @@ export default async function Home() {
           </p>
           <div className="space-y-4">
             <a
-              href="mailto:krishnakategaruai@gmail.com"
+              href={`mailto:${CONTACT.email}`}
               className="block text-xl font-medium border-b-2 border-black pb-1 hover:text-gray-600 hover:border-gray-600 transition-colors"
             >
-              krishnakategaruai@gmail.com
+              {CONTACT.email}
             </a>
-            <div className="flex flex-wrap gap-x-6 gap-y-2">
-              <a
-                href="https://www.linkedin.com/in/krishna-kategaru-32463253"
-                className="text-gray-600 hover:text-black transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
+            <div className="flex items-center gap-3">
+              <IconLink href={`mailto:${CONTACT.email}`} label="Email (Gmail)">
+                <MailIcon width={20} height={20} />
+              </IconLink>
+              <IconLink href={CONTACT.linkedin} label="LinkedIn">
+                <LinkedInIcon width={20} height={20} />
+              </IconLink>
+              <IconLink
+                href={buildWhatsAppLink(
+                  "Hi Krishna, I’m reaching out from kkai.in. Can we connect?"
+                )}
+                label="WhatsApp"
               >
-                LinkedIn
-              </a>
-              <a
-                href="https://www.youtube.com/@krishnakategaruai"
-                className="text-gray-600 hover:text-black transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                YouTube
-              </a>
+                <WhatsAppIcon width={20} height={20} />
+              </IconLink>
             </div>
           </div>
         </section>
