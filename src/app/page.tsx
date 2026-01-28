@@ -1,27 +1,6 @@
 import React from "react";
 import { MdEmail } from "react-icons/md";
 import { FaLinkedin, FaWhatsapp } from "react-icons/fa";
-
-// Gold feather SVG (left/right)
-function GoldFeather({ className = "", style = {} }) {
-  return (
-    <svg
-      viewBox="0 0 32 32"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      style={style}
-    >
-      <path
-        d="M4 28C12 20 20 12 28 4M4 28C7 23 13 15 28 4M4 28C10 25 19 18 28 4"
-        stroke="#FFD700"
-        strokeWidth="2.2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 import Image from "next/image";
 import Link from "next/link";
 
@@ -122,12 +101,29 @@ export default async function Home() {
           </div>
 
           <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-5 text-black">
-            AI, Data Science & Multi-Agent System Design that ships
+            AI Architecture & System Design for Production
           </h2>
-          <p className="text-xl sm:text-2xl text-gray-600 mb-8 max-w-3xl leading-relaxed">
-            I help teams design, review, and de-risk AI systems (GenAI, RAG, Multi-Agent, MCP, LLMOps, orchestration, and data platforms)
-            with a focus on production readiness, cost, and measurable outcomes. <span className="font-semibold text-black">Trending: Multi-Agent Collaboration, Model Context Protocol (MCP), LLMOps, Data-Centric AI, Autonomous Agents, Workflow Automation, and Responsible AI.</span>
+          <p className="text-xl sm:text-2xl text-gray-600 mb-6 max-w-3xl leading-relaxed">
+            I help teams design, review, and de-risk AI systems—from GenAI and RAG to multi-agent workflows and data platforms—with
+            a focus on production readiness, cost efficiency, and measurable outcomes.
           </p>
+          <div className="flex flex-wrap gap-2 mb-8 max-w-3xl">
+            {[
+              "Multi-Agent Systems",
+              "RAG & Knowledge",
+              "LLMOps",
+              "Model Context Protocol",
+              "Data Science",
+              "Workflow Automation",
+            ].map((tag) => (
+              <span
+                key={tag}
+                className="inline-block px-3 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded-full border border-gray-200"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
 
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
@@ -595,29 +591,17 @@ export default async function Home() {
         </section>
 
         {/* TESTIMONIALS */}
-        <section className="mb-16 sm:mb-20 w-full flex flex-col items-center">
-          <h2 className="text-2xl font-semibold mb-8 flex items-center gap-3">
-            <GoldFeather className="w-7 h-7 -ml-2" />
-            <span>Client Testimonial</span>
-            <GoldFeather className="w-7 h-7 -mr-2 rotate-180" />
-          </h2>
-          <div className="w-full max-w-2xl overflow-x-auto scrollbar-hide">
-            <div className="flex gap-6 min-w-[320px]">
-              {/* Only one card for now, but styled for scrolling */}
-              <div className="flex-shrink-0 w-80 bg-white border border-gray-200 rounded-xl shadow-md p-6 flex flex-col items-center justify-center relative">
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2">
-                  <GoldFeather className="w-8 h-8" />
-                </div>
-                <p className="text-lg text-gray-800 italic text-center mb-4 mt-4">
-                  “Consulted for a cost-effective approach—Krishna’s guidance helped us save 30% infra cost while scaling our AI system reliably.”
-                </p>
-                <div className="flex items-center gap-3 mt-2">
-                  <span className="block w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-500 text-xl">C</span>
-                  <div>
-                    <div className="font-semibold text-gray-900 leading-tight">Confidential Client</div>
-                    <div className="text-xs text-gray-500">AI Platform Lead</div>
-                  </div>
-                </div>
+        <section className="mb-16 sm:mb-20 max-w-3xl">
+          <h2 className="text-2xl font-semibold mb-6">Client testimonial</h2>
+          <div className="bg-gray-50 border-l-4 border-gray-900 p-8 rounded-r-lg">
+            <p className="text-lg text-gray-800 mb-6 leading-relaxed">
+              "Krishna''s guidance helped us save 30% on infrastructure costs while scaling our AI system reliably. His cost-effective approach and practical architecture recommendations were exactly what we needed."
+            </p>
+            <div className="flex items-center gap-3">
+              <span className="block w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center font-semibold text-gray-700 text-sm">C</span>
+              <div>
+                <div className="font-semibold text-gray-900">Confidential Client</div>
+                <div className="text-sm text-gray-600">AI Platform Lead</div>
               </div>
             </div>
           </div>
@@ -689,3 +673,4 @@ export default async function Home() {
     </div>
   );
 }
+
