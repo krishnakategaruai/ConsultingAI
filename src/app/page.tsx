@@ -1,4 +1,27 @@
 import React from "react";
+import { MdEmail } from "react-icons/md";
+import { FaLinkedin, FaWhatsapp } from "react-icons/fa";
+
+// Gold feather SVG (left/right)
+function GoldFeather({ className = "", style = {} }) {
+  return (
+    <svg
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      style={style}
+    >
+      <path
+        d="M4 28C12 20 20 12 28 4M4 28C7 23 13 15 28 4M4 28C10 25 19 18 28 4"
+        stroke="#FFD700"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 import Image from "next/image";
 import Link from "next/link";
 
@@ -40,62 +63,6 @@ function IconLink({
   );
 }
 
-function MailIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="text-gray-700"
-      {...props}
-    >
-      <path d="M4 6h16v12H4z" />
-      <path d="m4 7 8 6 8-6" />
-    </svg>
-  );
-}
-
-function LinkedInIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="text-gray-700"
-      {...props}
-    >
-      <path d="M4 4h16v16H4z" />
-      <path d="M8 10v7" />
-      <path d="M8 7.5v.5" />
-      <path d="M12 17v-4.2c0-1.3.7-2.1 1.9-2.1 1.2 0 1.9.8 1.9 2.1V17" />
-      <path d="M12 10v7" />
-    </svg>
-  );
-}
-
-function WhatsAppIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="text-gray-700"
-      {...props}
-    >
-      <path d="M21 11.5a8.5 8.5 0 0 1-12.7 7.4L3 20l1.3-4.7A8.5 8.5 0 1 1 21 11.5z" />
-      <path d="M9.2 9.2c.6-1 1.2-1.1 1.8-.8l.9.5c.5.3.6.7.4 1.2l-.4 1c.6 1.1 1.5 2 2.6 2.6l1-.4c.5-.2.9-.1 1.2.4l.5.9c.3.6.2 1.2-.8 1.8-1 .6-3.5.2-5.6-1.9-2.1-2.1-2.5-4.6-1.9-5.6z" />
-    </svg>
-  );
-}
 
 function fallbackThumbnailUrl(id: string) {
   return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
@@ -138,10 +105,10 @@ export default async function Home() {
                 href={`mailto:${CONTACT.email}`}
                 label="Email (Gmail)"
               >
-                <MailIcon width={20} height={20} />
+                <MdEmail size={22} className="text-gray-700" />
               </IconLink>
               <IconLink href={CONTACT.linkedin} label="LinkedIn">
-                <LinkedInIcon width={20} height={20} />
+                <FaLinkedin size={22} className="text-gray-700" />
               </IconLink>
               <IconLink
                 href={buildWhatsAppLink(
@@ -149,17 +116,17 @@ export default async function Home() {
                 )}
                 label="WhatsApp"
               >
-                <WhatsAppIcon width={20} height={20} />
+                <FaWhatsapp size={22} className="text-gray-700" />
               </IconLink>
             </div>
           </div>
 
           <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-5 text-black">
-            AI Architecture & System Design that ships
+            AI, Data Science & Multi-Agent System Design that ships
           </h2>
           <p className="text-xl sm:text-2xl text-gray-600 mb-8 max-w-3xl leading-relaxed">
-            I help teams design, review, and de-risk AI systems (GenAI, RAG, agents, and data platforms)
-            with a focus on production readiness, cost, and measurable outcomes.
+            I help teams design, review, and de-risk AI systems (GenAI, RAG, Multi-Agent, MCP, LLMOps, orchestration, and data platforms)
+            with a focus on production readiness, cost, and measurable outcomes. <span className="font-semibold text-black">Trending: Multi-Agent Collaboration, Model Context Protocol (MCP), LLMOps, Data-Centric AI, Autonomous Agents, Workflow Automation, and Responsible AI.</span>
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
@@ -218,10 +185,10 @@ export default async function Home() {
           </p>
           <div className="grid sm:grid-cols-2 gap-4">
             {[
-              "Engineering teams shipping GenAI, RAG, or agent workflows",
-              "Founders validating whether AI is worth building",
-              "Leads who want an architecture second opinion before committing",
-              "Managers asked to “add AI” without a system design plan",
+              "Engineering teams shipping GenAI, RAG, Multi-Agent, or MCP-powered workflows",
+              "Founders validating whether AI or Data Science is worth building",
+              "Leads who want an architecture or data science second opinion before committing",
+              "Managers asked to “add AI, Multi-Agent, or Data Science” without a system design plan",
             ].map((item) => (
               <div
                 key={item}
@@ -249,6 +216,7 @@ export default async function Home() {
                   "Use-case clarity and success metrics",
                   "Model vs rules vs search tradeoffs",
                   "Cost, latency, and risk estimation",
+                  "Data readiness and data science opportunity analysis",
                 ],
               },
               {
@@ -257,14 +225,17 @@ export default async function Home() {
                   "Indexing strategy, chunking, retrieval, reranking",
                   "Grounding, citations, and hallucination controls",
                   "Evaluation: relevance, faithfulness, and drift",
+                  "Data pipelines, feature engineering, and data quality",
                 ],
               },
               {
-                title: "Agentic Workflows",
+                title: "Multi-Agent & Agentic Workflows",
                 points: [
                   "Tooling boundaries and failure modes",
                   "Human-in-the-loop checkpoints",
                   "State, retries, and idempotency",
+                  "Multi-agent orchestration, communication, and collaboration",
+                  "MCP (Model Context Protocol) integration",
                 ],
               },
               {
@@ -273,6 +244,7 @@ export default async function Home() {
                   "Observability: traces, prompts, cost dashboards",
                   "Security & privacy: PII, secrets, access controls",
                   "Reliability: SLAs, fallbacks, and safe degradation",
+                  "LLMOps, Responsible AI, and continuous evaluation",
                 ],
               },
             ].map((block) => (
@@ -320,9 +292,9 @@ export default async function Home() {
                 includes: "UX patterns, guardrails, prompt contracts, telemetry, A/B + evaluation.",
               },
               {
-                title: "Data platform for ML/AI",
-                when: "When data reliability is the bottleneck for any model or GenAI system.",
-                includes: "Pipelines, data contracts, feature/data stores, quality checks, lineage.",
+                title: "Data platform for ML/AI & Data Science",
+                when: "When data reliability or advanced analytics is the bottleneck for any model, GenAI, or business system.",
+                includes: "Pipelines, data contracts, feature/data stores, quality checks, lineage, analytics, and data science workflows.",
               },
             ].map((a) => (
               <div
@@ -622,6 +594,35 @@ export default async function Home() {
           </div>
         </section>
 
+        {/* TESTIMONIALS */}
+        <section className="mb-16 sm:mb-20 w-full flex flex-col items-center">
+          <h2 className="text-2xl font-semibold mb-8 flex items-center gap-3">
+            <GoldFeather className="w-7 h-7 -ml-2" />
+            <span>Client Testimonial</span>
+            <GoldFeather className="w-7 h-7 -mr-2 rotate-180" />
+          </h2>
+          <div className="w-full max-w-2xl overflow-x-auto scrollbar-hide">
+            <div className="flex gap-6 min-w-[320px]">
+              {/* Only one card for now, but styled for scrolling */}
+              <div className="flex-shrink-0 w-80 bg-white border border-gray-200 rounded-xl shadow-md p-6 flex flex-col items-center justify-center relative">
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2">
+                  <GoldFeather className="w-8 h-8" />
+                </div>
+                <p className="text-lg text-gray-800 italic text-center mb-4 mt-4">
+                  “Consulted for a cost-effective approach—Krishna’s guidance helped us save 30% infra cost while scaling our AI system reliably.”
+                </p>
+                <div className="flex items-center gap-3 mt-2">
+                  <span className="block w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-500 text-xl">C</span>
+                  <div>
+                    <div className="font-semibold text-gray-900 leading-tight">Confidential Client</div>
+                    <div className="text-xs text-gray-500">AI Platform Lead</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* FAQ */}
         <section className="mb-16 sm:mb-20 max-w-3xl">
           <h2 className="text-2xl font-semibold mb-6">FAQ</h2>
@@ -668,10 +669,10 @@ export default async function Home() {
             </a>
             <div className="flex items-center gap-3">
               <IconLink href={`mailto:${CONTACT.email}`} label="Email (Gmail)">
-                <MailIcon width={20} height={20} />
+                <MdEmail size={22} className="text-gray-700" />
               </IconLink>
               <IconLink href={CONTACT.linkedin} label="LinkedIn">
-                <LinkedInIcon width={20} height={20} />
+                <FaLinkedin size={22} className="text-gray-700" />
               </IconLink>
               <IconLink
                 href={buildWhatsAppLink(
@@ -679,7 +680,7 @@ export default async function Home() {
                 )}
                 label="WhatsApp"
               >
-                <WhatsAppIcon width={20} height={20} />
+                <FaWhatsapp size={22} className="text-gray-700" />
               </IconLink>
             </div>
           </div>
